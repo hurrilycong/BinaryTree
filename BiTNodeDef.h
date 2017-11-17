@@ -28,16 +28,16 @@ typedef struct AvlNode
 {
     int data;
     int height;
-    AvlTNode *lchild;
-    AvlTNode *rchild;
-    AvlTNode(AvlNode *r, AvlNode *l, int key, int h)
+    AvlNode *lchild;
+    AvlNode *rchild;
+    AvlNode(AvlNode *r, AvlNode *l, int key, int h)
     {
         lchild = l;
         rchild = r;
         data = key;
         height = h;
     }
-    AvlTNode()
+    AvlNode()
     {
         lchild = NULL;
         rchild = NULL;
