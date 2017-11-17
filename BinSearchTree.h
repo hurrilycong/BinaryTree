@@ -23,6 +23,7 @@ class BinSearchTree
       void _preOrderTraverse(BiTree node);
       void _inOrderTraverse(BiTree node);
       void _postOrderTraverse(BiTree node);
+      int _delete_pointer(BiTree &node);
 };
 
 #endif

@@ -16,9 +16,23 @@ BinSearchTree::BinSearchTree(const BiTree bt)
     m_root = bt;
 }
 
+void BinSearchTree::_delete_pointer(BiTree &node)
+{
+    if(NULL == node)
+    {
+        return ;
+    }
+    _delete_pointer(node->lchild);
+    -delete_pointer(node->rchild);
+    delete node;
+}
+
 BinSearchTree::~BinSearchTree()
 {
-    m_root = NULL;
+    if(NULL != m_root)
+    {
+        _delete_pointer(m_root);
+    }
 }
 
 void BinSearchTree::_preOrderTraverse(BiTree node)
