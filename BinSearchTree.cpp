@@ -16,14 +16,14 @@ BinSearchTree::BinSearchTree(const BiTree bt)
     m_root = bt;
 }
 
-void BinSearchTree::_delete_pointer(BiTree &node)
+void BinSearchTree::_delete_pointer(BiNode *&node)
 {
     if(NULL == node)
     {
         return ;
     }
     _delete_pointer(node->lchild);
-    -delete_pointer(node->rchild);
+    _delete_pointer(node->rchild);
     delete node;
 }
 
