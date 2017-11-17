@@ -24,13 +24,13 @@ typedef struct BiNode
 }BiTNode, *BiTree;
 
 //avl tree
-typedef struct AvlTNode
+typedef struct AvlNode
 {
     int data;
     int height;
     AvlTNode *lchild;
     AvlTNode *rchild;
-    AvlTNode(AvlTNode *r, AvlTNode *l, int key, int h)
+    AvlTNode(AvlNode *r, AvlNode *l, int key, int h)
     {
         lchild = l;
         rchild = r;
@@ -44,6 +44,6 @@ typedef struct AvlTNode
         data = 0;
         height = 1;
     }
-}
+}AvlTNode, *AvlTreeNode;
 
 #endif
