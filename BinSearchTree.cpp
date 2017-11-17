@@ -239,3 +239,56 @@ int BinSearchTree::findMinValue(int &data)
 
     return 0;
 }
+
+int BinSearchTree::_get_deepth(BiTree node)
+{
+    if(NULL == node)
+    {
+        return 0;
+    }
+    else
+    {
+        int l = _get_deepth(node->lchild);
+        int r = _get_deepth(node->rchild);
+        return (l > r) ? (l+1) : (r+1);
+    }
+}
+
+int BinSearchTree::get_max_deepth()
+{
+    if(NULL != m_root)
+    {
+        int deep = 1;
+        return _get_deepth(m_root);
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int BinSearchTree::_get_node_num(BiTree node)
+{
+    if(NULL != node)
+    {
+        int l = _get_node_num(node->lchild);
+        int r = _get_node_num(node->rchild);
+        return l+r+1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int BinSearchTree::get_node_num()
+{
+    if(NULL == m_root)
+    {
+        return 0;
+    }
+    else
+    {
+        return _get_node_num(m_root);
+    }
+}

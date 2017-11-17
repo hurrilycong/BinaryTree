@@ -16,6 +16,8 @@ class BinSearchTree
       int delete_node(int data);
       int findMaxValue(int &data);
       int findMinValue(int &data);
+      int get_max_deepth();
+      int get_node_num();
       int findNode(BiTree tree, int key, BiTree parent, BiTNode *&self);
       BiTree getRoot();
     private:
@@ -24,6 +26,8 @@ class BinSearchTree
       void _inOrderTraverse(BiTree node);
       void _postOrderTraverse(BiTree node);
       void _delete_pointer(BiNode *&node);
+      int _get_deepth(BiTree node);
+      int _get_node_num(BiTree node);
 };
 
 #endif
