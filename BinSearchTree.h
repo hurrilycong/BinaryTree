@@ -12,6 +12,7 @@ class BinSearchTree
       int preOrderTraverse();
       int inOrderTraverse();
       int postOrderTraverse();
+      int levelTraverse();
       int insert_node(int data);
       int delete_node(int data);
       int findMaxValue(int &data);
@@ -28,6 +29,7 @@ class BinSearchTree
       void _delete_pointer(BiNode *&node);
       int _get_deepth(BiTree node);
       int _get_node_num(BiTree node);
+      int _level_traverse(BiTree node);
 };
 
 #endif

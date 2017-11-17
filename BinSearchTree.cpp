@@ -5,6 +5,7 @@
 #include "BinSearchTree.h"
 #include "BiTNodeDef.h"
 #include <iostream>
+#include <queue>
 
 BinSearchTree::BinSearchTree()
 {
@@ -290,5 +291,46 @@ int BinSearchTree::get_node_num()
     else
     {
         return _get_node_num(m_root);
+    }
+}
+
+int BinSearchTree::_level_traverse(BiTree node)
+{
+    if(NULL == node)
+    {
+        return 0;
+    }
+    else
+    {
+        std::queue<BiTree> que;
+        que.push(node);
+        while(!que.empty())
+        {
+            BiTree p = que.front();
+            std::cout<<p->data<<" ";
+            que.pop();
+            if(p->lchild)
+            {
+                que.push(p->lchild);
+            }
+            if(p->rchild)
+            {
+                que.push(p->rchild);
+            }
+        }
+    }
+    return 1;
+}
+
+int BinSearchTree::levelTraverse()
+{
+    if(NULL == m_root)
+    {
+        return 0;
+    }
+    else
+    {
+        _level_traverse(m_root);
+        return 0;
     }
 }
