@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+//binary search tree
 typedef struct BiNode
 {
     int data;
@@ -21,5 +22,28 @@ typedef struct BiNode
         data = 0;
     }
 }BiTNode, *BiTree;
+
+//avl tree
+typedef struct AvlTNode
+{
+    int data;
+    int height;
+    AvlTNode *lchild;
+    AvlTNode *rchild;
+    AvlTNode(AvlTNode *r, AvlTNode *l, int key, int h)
+    {
+        lchild = l;
+        rchild = r;
+        data = key;
+        height = h;
+    }
+    AvlTNode()
+    {
+        lchild = NULL;
+        rchild = NULL;
+        data = 0;
+        height = 1;
+    }
+}
 
 #endif
