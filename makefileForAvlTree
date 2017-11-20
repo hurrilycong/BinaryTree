@@ -1,0 +1,8 @@
+avl.exe:main.o AvlTree.o
+	g++ -o avl.exe main.o AvlTree.o
+main.o:main.cpp AvlTree.h
+	g++ -c main.cpp
+AvlTree.o:AvlTree.cpp AvlTree.h
+	g++ -c AvlTree.cpp
+clean:
+	rm -f *.o *.exe
