@@ -5,6 +5,7 @@
 #include "AvlTree.h"
 #include "BiTNodeDef.h"
 #include <iostream>
+#include <queue>
 
 AvlTree::AvlTree()
 {
@@ -106,8 +107,11 @@ int AvlTree::postOrderTraverse()
 
     return 0;
 }
-
-int AvlTree::findNode(AvlTreeNode tree, int data, AvlTreeNode parent, BiTNode *&self)
+/*
+* @return   0 not found
+            1 found
+*/
+int AvlTree::findNode(AvlTreeNode tree, int data, AvlTreeNode parent, AvlTNode *&self)
 {
     if(NULL == tree)
     {
@@ -129,30 +133,160 @@ int AvlTree::findNode(AvlTreeNode tree, int data, AvlTreeNode parent, BiTNode *&
     }
 }
 
-int AvlTree::insert_node(int key)
+int AvlTree::getHeight(AvlTreeNode self)
 {
-    AvlTNode *self;
-    if(!findNode(m_root, key, NULL, self))
+    if(!self)
+    {
+        return 0;
+    }
+    else
+    {
+        return self->height;
+    }
+}
+
+int AvlTree::getMax(int a, int b)
+{
+    return (a > b) ? a : b;
+}
+
+void AvlTree::_LL_rotate(AvlTreeNode &node)
+{
+    AvlTreeNode temp = node->lchild;
+    node->lchild = temp->rchild;
+    temp->lchild = node;
+
+    node->height = getMax(getHeight(node->lchild), getHeight(node->rchild)) + 1;
+    temp->height = getMax(getHeight(temp->lchild), getHeight(temp->rchild)) + 1;
+
+    node = temp;
+}
+
+void AvlTree::_RR_rotate(AvlTreeNode &node)
+{
+    AvlTreeNode temp = node->rchild;
+    node->rchild = temp->lchild;
+    temp->lchild = node;
+
+    node->height = getMax(getHeight(node->lchild), getHeight(node->rchild)) + 1;
+    temp->height = getMax(getHeight(temp->lchild), getHeight(node->rchild)) + 1;
+
+    node = temp;
+}
+
+void AvlTree::_LR_rotate(AvlTreeNode &node)
+{
+    _LL_rotate(node);
+    _RR_rotate(node);
+}
+
+void AvlTree::_RL_rotate(AvlTreeNode &node)
+{
+    _RR_rotate(node);
+    _LL_rotate(node);
+}
+
+/*
+* @return   0 insert successful
+            -1 not insert
+*/
+int AvlTree::_insert_node(AvlNode *&node, int key)
+{
+    AvlTreeNode self;
+    if(!node)
     {
         AvlTreeNode node = new AvlTNode();
         node->lchild = NULL;
         node->rchild = NULL;
         node->data = key;
-        if(NULL == self)
+        node->height = 1;
+        m_root = node;
+        return 0;
+    }
+    else if(findNode(node, key, NULL, self))
+    {
+        return -1;
+    }
+    else if(key < node->data)
+    {
+        if(_insert_node(node->lchild, key))
         {
-            m_root = node;
-        }
-        else if(self->data > key)
-        {
-            self->lchild = node;
+            return -1;
         }
         else
         {
-            self->rchild = node;
+            node->height = getMax(getHeight(node->rchild), getHeight(node->lchild)) + 1;
+            if(2 == (getHeight(node->lchild) - getHeight(node->rchild)))
+            {
+                if(getHeight(node->lchild->lchild) > getHeight(node->lchild->rchild))
+                {
+                    _LL_rotate(node);
+                }
+                else
+                {
+                    _LR_rotate(node);
+                }
+            }
         }
         return 0;
     }
-    return -1;
+    else
+    {
+        if(_insert_node(node->rchild, key))
+        {
+            return -1;
+        }
+        else
+        {
+            node->height = getMax(getHeight(node->rchild), getHeight(node->lchild)) + 1;
+            if(2 == (getHeight(node->rchild) - getHeight(node->lchild)))
+            {
+                if(getHeight(node->rchild->lchild) > getHeight(node->rchild->rchild))
+                {
+                    _RL_rotate(node);
+                }
+                else
+                {
+                    _RR_rotate(node);
+                }
+            }
+        }
+        return 0;
+    }
+}
+
+int AvlTree::insert_node(int key)
+{
+    if(_insert_node(m_root, key))
+    {
+        std::cout << "insert node to AvlTree failed for key " << key <<std::endl;
+        return -1;
+    }
+    //getMinHeight();
+    return 0;
+    // AvlTNode *self;
+    // if(!findNode(m_root, key, NULL, self))
+    // {
+    //     AvlTreeNode node = new AvlTNode();
+    //     node->lchild = NULL;
+    //     node->rchild = NULL;
+    //     node->data = key;
+    //     node->height = getHeight(AvlTreeNode self) + 1;
+    //     if(NULL == self)
+    //     {
+    //         m_root = node;
+    //     }
+    //     else if(self->data > key)
+    //     {
+    //         self->lchild = node;
+    //     }
+    //     else
+    //     {
+    //         self->rchild = node;
+    //     }
+    //     return 0;
+    // }
+    // return -1;
 }
 
 /*
@@ -240,11 +374,11 @@ int AvlTree::findMinValue(int &data)
     return 0;
 }
 
-int AvlTree::_levelTraverse(AvlTreeNode node)
+void AvlTree::_levelTraverse(AvlTreeNode node)
 {
     if(NULL == node)
     {
-        return 0;
+        return ;
     }
     else
     {
@@ -252,7 +386,7 @@ int AvlTree::_levelTraverse(AvlTreeNode node)
         que.push(node);
         while(!que.empty())
         {
-            BiTree p = que.front();
+            AvlTreeNode p = que.front();
             std::cout<<p->data<<" ";
             que.pop();
             if(p->lchild)
@@ -265,7 +399,6 @@ int AvlTree::_levelTraverse(AvlTreeNode node)
             }
         }
     }
-    return 1;
 }
 
 int AvlTree::levelTraverse()
