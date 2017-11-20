@@ -131,7 +131,7 @@ int AvlTree::findNode(AvlTreeNode tree, int data, AvlTreeNode parent, BiTNode *&
 
 int AvlTree::insert_node(int key)
 {
-    BiTNode *self;
+    AvlTNode *self;
     if(!findNode(m_root, key, NULL, self))
     {
         AvlTreeNode node = new AvlTNode();
