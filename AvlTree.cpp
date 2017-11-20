@@ -239,3 +239,44 @@ int AvlTree::findMinValue(int &data)
 
     return 0;
 }
+
+int AvlTree::_levelTraverse(AvlTreeNode node)
+{
+    if(NULL == node)
+    {
+        return 0;
+    }
+    else
+    {
+        std::queue<AvlTreeNode> que;
+        que.push(node);
+        while(!que.empty())
+        {
+            BiTree p = que.front();
+            std::cout<<p->data<<" ";
+            que.pop();
+            if(p->lchild)
+            {
+                que.push(p->lchild);
+            }
+            if(p->rchild)
+            {
+                que.push(p->rchild);
+            }
+        }
+    }
+    return 1;
+}
+
+int AvlTree::levelTraverse()
+{
+    if(NULL == m_root)
+    {
+        return 0;
+    }
+    else
+    {
+        _levelTraverse(m_root);
+        return 0;
+    }
+}

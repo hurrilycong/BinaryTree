@@ -12,6 +12,7 @@ class AvlTree
         int preOrderTraverse();
         int inOrderTraverse();
         int postOrderTraverse();
+        int levelTraverse();
         int insert_node(int data);
         int delete_node(int data);
         int findMaxValue(int &data);
@@ -23,6 +24,7 @@ class AvlTree
         void _preOrderTraverse(AvlTreeNode node);
         void _inOrderTraverse(AvlTreeNode node);
         void _postOrderTraverse(AvlTreeNode node);
+        void _levelTraverse(AvlTreeNode node);
         void _insert_node(AvlTNode *&node, int key, int &taller);
         void _delete_node(AvlTNode *&node, int key, int &taller);
         void _delete_pointer(AvlTNode *&node);
