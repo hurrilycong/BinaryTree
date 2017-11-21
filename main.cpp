@@ -24,7 +24,11 @@ int main()
     tree.findMaxValue(a);
     std::cout<<std::endl;
     tree.levelTraverse();
-    std::cout<<"Max value of this tree is "<<a<<std::endl;
+    std::cout << "Max value of this tree is "<<a<<std::endl;
+    std::cout << "input a number you want delete:" <<std::endl;
+    std::cin >> a;
+    tree.delete_node(a);
+    tree.inOrderTraverse();
     //std::cout<<"the deepth of this tree is "<<tree.get_max_deepth()<<std::endl;
     //std::cout<<"the node num of this tree is "<<tree.get_node_num()<<std::endl;
     return 0;

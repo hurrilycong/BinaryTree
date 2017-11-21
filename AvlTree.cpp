@@ -274,7 +274,7 @@ AvlTreeNode AvlTree::getRoot()
     return m_root;
 }
 
-AvlTreeNode AvlTree::getMaxNode(AvlTreeNode node)
+AvlTreeNode AvlTree::findMaxNode(AvlTreeNode node)
 {
     if(node)
     {
@@ -287,7 +287,7 @@ AvlTreeNode AvlTree::getMaxNode(AvlTreeNode node)
     return NULL;
 }
 
-AvlTreeNode AvlTree::getMaxNode(AvlTreeNode node)
+AvlTreeNode AvlTree::findMinNode(AvlTreeNode node)
 {
     if(node)
     {
@@ -300,7 +300,7 @@ AvlTreeNode AvlTree::getMaxNode(AvlTreeNode node)
     return NULL;
 }
 
-int AvlTree:_delete_node(AvlTreeNode &node, int key)
+int AvlTree::_delete_node(AvlTreeNode &node, int key)
 {
     if(!node)
     {
@@ -318,7 +318,7 @@ int AvlTree:_delete_node(AvlTreeNode &node, int key)
         else if(!node->rchild)
         {
             temp = node;
-            node = node-rchild;
+            node = node->rchild;
             delete temp;
         }
         else
@@ -327,7 +327,7 @@ int AvlTree:_delete_node(AvlTreeNode &node, int key)
             AvlTreeNode temp;
             if(getHeight(node->lchild) > getHeight(node->rchild))
             {
-                temp = findMaxValue(node->lchild);
+                temp = findMaxNode(node->lchild);
                 if(temp)
                 {
                     key = node->data;
@@ -338,7 +338,7 @@ int AvlTree:_delete_node(AvlTreeNode &node, int key)
             }
             else
             {
-                temp = finMinValue(node->rchild);
+                temp = findMinNode(node->rchild);
                 if(temp)
                 {
                     key = node->data;
@@ -358,7 +358,7 @@ int AvlTree:_delete_node(AvlTreeNode &node, int key)
         }
         else
         {
-            if(2 == (getHeigth(node->lchild) - getHeight(node->rchild))
+            if(2 == (getHeight(node->lchild) - getHeight(node->rchild)))
             {
                 if(getHeight(node->lchild) > getHeight(node->rchild))
                 {
@@ -380,7 +380,7 @@ int AvlTree:_delete_node(AvlTreeNode &node, int key)
         }
         else
         {
-            if(-2 == (getHeigth(node->lchild) - getHeight(node->rchild))
+            if(-2 == (getHeight(node->lchild) - getHeight(node->rchild)))
             {
                 if(getHeight(node->lchild) > getHeight(node->rchild))
                 {
