@@ -195,12 +195,13 @@ int AvlTree::_insert_node(AvlNode *&node, int key)
     AvlTreeNode self;
     if(!node)
     {
-        AvlTreeNode node = new AvlTNode();
-        node->lchild = NULL;
-        node->rchild = NULL;
-        node->data = key;
-        node->height = 1;
-        m_root = node;
+        self = new AvlTNode();
+        self->lchild = NULL;
+        self->rchild = NULL;
+        self->data = key;
+        self->height = 1;
+        node = self;
+        self = NULL;
         return 0;
     }
     else if(findNode(node, key, NULL, self))
