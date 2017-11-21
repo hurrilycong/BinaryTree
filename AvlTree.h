@@ -7,7 +7,7 @@ class AvlTree
 {
     public:
         AvlTree();
-        AvlTree(const AvlTNode bt);
+        AvlTree(const AvlTreeNode bt);
         ~AvlTree();
         int preOrderTraverse();
         int inOrderTraverse();
@@ -18,6 +18,7 @@ class AvlTree
         int findMaxValue(int &data);
         int findMinValue(int &data);
         int findNode(AvlTreeNode tree, int key, AvlTreeNode parent, AvlTNode *&self);
+        int getHeight(AvlTreeNode self);
         AvlTreeNode getRoot();
     private:
         AvlTNode *m_root;
@@ -25,11 +26,15 @@ class AvlTree
         void _inOrderTraverse(AvlTreeNode node);
         void _postOrderTraverse(AvlTreeNode node);
         void _levelTraverse(AvlTreeNode node);
-        void _insert_node(AvlTNode *&node, int key, int &taller);
-        void _delete_node(AvlTNode *&node, int key, int &taller);
+        int _insert_node(AvlTNode *&node, int key);
+        void _delete_node(AvlTNode *&node, int key);
         void _delete_pointer(AvlTNode *&node);
-        void _r_rotate(AvlTNode *&node);
-        void _l_rotate(AvlTNode *&node);
-}
+        void _LL_rotate(AvlTNode *&node);
+        void _LR_rotate(AvlTNode *&node);
+        void _RL_rotate(AvlTNode *&node);
+        void _RR_rotate(AvlTNode *&node);
+        int getMax(int a, int b);
+
+};
 
 #endif
