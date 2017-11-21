@@ -36,7 +36,6 @@ class AvlTree
         void _RL_rotate(AvlTNode *&node);
         void _RR_rotate(AvlTNode *&node);
         int getMax(int a, int b);
-
 };
 
 #endif
