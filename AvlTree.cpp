@@ -263,31 +263,7 @@ int AvlTree::insert_node(int key)
         std::cout << "insert node to AvlTree failed for key " << key <<std::endl;
         return -1;
     }
-    //getMinHeight();
     return 0;
-    // AvlTNode *self;
-    // if(!findNode(m_root, key, NULL, self))
-    // {
-    //     AvlTreeNode node = new AvlTNode();
-    //     node->lchild = NULL;
-    //     node->rchild = NULL;
-    //     node->data = key;
-    //     node->height = getHeight(AvlTreeNode self) + 1;
-    //     if(NULL == self)
-    //     {
-    //         m_root = node;
-    //     }
-    //     else if(self->data > key)
-    //     {
-    //         self->lchild = node;
-    //     }
-    //     else
-    //     {
-    //         self->rchild = node;
-    //     }
-    //     return 0;
-    // }
-    // return -1;
 }
 
 /*
@@ -298,49 +274,136 @@ AvlTreeNode AvlTree::getRoot()
     return m_root;
 }
 
-int AvlTree::delete_node(int key)
+AvlTreeNode AvlTree::getMaxNode(AvlTreeNode node)
 {
-    AvlTreeNode self = NULL;
-    AvlTreeNode p = NULL;
-    if(findNode(m_root, key, NULL, self))
+    if(node)
     {
-        if(NULL == self)
+        while(node->rchild)
         {
-            return 0;
+            node = node->rchild;
         }
-        if(NULL == self->rchild)
+        return node;
+    }
+    return NULL;
+}
+
+AvlTreeNode AvlTree::getMaxNode(AvlTreeNode node)
+{
+    if(node)
+    {
+        while(node->lchild)
         {
-            p = self;
-            self = self->lchild;
-            delete p;
+            node = node->lchild;
         }
-        else if(NULL == self->lchild)
+        return node;
+    }
+    return NULL;
+}
+
+int AvlTree:_delete_node(AvlTreeNode &node, int key)
+{
+    if(!node)
+    {
+        return -1;
+    }
+    else if(key == node->data)
+    {
+        AvlTreeNode temp;
+        if(!node->lchild)
         {
-            p = self;
-            self = self->rchild;
-            delete p;
+            temp = node;
+            node = node->rchild;
+            delete temp;
+        }
+        else if(!node->rchild)
+        {
+            temp = node;
+            node = node-rchild;
+            delete temp;
         }
         else
         {
-            AvlTreeNode q;
-            p = self->lchild;
-            while(p->rchild)
+            int key;
+            AvlTreeNode temp;
+            if(getHeight(node->lchild) > getHeight(node->rchild))
             {
-                q = p;
-                p = p->rchild;
-            }
-            self->data = p->data;
-            if(p != q)
-            {
-                q->lchild = p->rchild;
+                temp = findMaxValue(node->lchild);
+                if(temp)
+                {
+                    key = node->data;
+                    node->data = temp->data;
+                    temp->data = key;
+                    delete_node(key);
+                }
             }
             else
             {
-                q->rchild = p->lchild;
+                temp = finMinValue(node->rchild);
+                if(temp)
+                {
+                    key = node->data;
+                    node->data = temp->data;
+                    temp->data = key;
+                    delete_node(key);
+                }
             }
-            delete p;
+        }
+        return 0;
+    }
+    else if(key > node->data)
+    {
+        if(!_delete_node(node->rchild, key))
+        {
+            return -1;
+        }
+        else
+        {
+            if(2 == (getHeigth(node->lchild) - getHeight(node->rchild))
+            {
+                if(getHeight(node->lchild) > getHeight(node->rchild))
+                {
+                    _RL_rotate(node);
+                }
+                else
+                {
+                    _RR_rotate(node);
+                }
+            }
+            return 0;
         }
     }
+    else
+    {
+        if(!_delete_node(node->lchild, key))
+        {
+            return -1;
+        }
+        else
+        {
+            if(-2 == (getHeigth(node->lchild) - getHeight(node->rchild))
+            {
+                if(getHeight(node->lchild) > getHeight(node->rchild))
+                {
+                    _LL_rotate(node);
+                }
+                else
+                {
+                    _LR_rotate(node);
+                }
+            }
+            return 0;
+        }
+    }
+}
+
+int AvlTree::delete_node(int key)
+{
+    if(_delete_node(m_root, key))
+    {
+        std::cout << "Error in delete node for key " << key << std::endl;
+        return -1;
+    }
+    return 0;
 }
 
 int AvlTree::findMaxValue(int &data)
