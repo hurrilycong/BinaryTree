@@ -19,7 +19,7 @@ BinSearchTree::BinSearchTree(const BiTree bt)
 
 void BinSearchTree::_delete_pointer(BiNode *&node)
 {
-    if(NULL == node)
+    if(!node)
     {
         return ;
     }
@@ -30,7 +30,7 @@ void BinSearchTree::_delete_pointer(BiNode *&node)
 
 BinSearchTree::~BinSearchTree()
 {
-    if(NULL != m_root)
+    if(m_root)
     {
         _delete_pointer(m_root);
     }
@@ -39,11 +39,11 @@ BinSearchTree::~BinSearchTree()
 void BinSearchTree::_preOrderTraverse(BiTree node)
 {
     std::cout << node->data << " ";
-    if(node->lchild != NULL)
+    if(node->lchild)
     {
         _preOrderTraverse(node->lchild);
     }
-    if(node->rchild != NULL)
+    if(node->rchild)
     {
         _preOrderTraverse(node->rchild);
     }
@@ -62,12 +62,12 @@ int BinSearchTree::preOrderTraverse()
 
 void BinSearchTree::_inOrderTraverse(BiTree node)
 {
-    if (node->lchild != NULL)
+    if (node->lchild)
     {
         _inOrderTraverse(node->lchild);
     }
     std::cout << node->data << " ";
-    if (node->rchild != NULL)
+    if (node->rchild)
     {
         _inOrderTraverse(node->rchild);
     }
@@ -86,11 +86,11 @@ int BinSearchTree::inOrderTraverse()
 
 void BinSearchTree::_postOrderTraverse(BiTree node)
 {
-    if (node->lchild != NULL)
+    if (node->lchild)
     {
         _postOrderTraverse(node->lchild);
     }
-    if (node->rchild != NULL)
+    if (node->rchild)
     {
         _postOrderTraverse(node->rchild);
     }
@@ -99,7 +99,7 @@ void BinSearchTree::_postOrderTraverse(BiTree node)
 
 int BinSearchTree::postOrderTraverse()
 {
-    if (NULL == m_root)
+    if (!m_root)
     {
         return -1;
     }
@@ -110,7 +110,7 @@ int BinSearchTree::postOrderTraverse()
 
 int BinSearchTree::findNode(BiTree tree, int data, BiTree parent, BiTNode *&self)
 {
-    if(NULL == tree)
+    if(!tree)
     {
         self = parent;
         return 0;
@@ -139,7 +139,7 @@ int BinSearchTree::insert_node(int key)
         node->lchild = NULL;
         node->rchild = NULL;
         node->data = key;
-        if(NULL == self)
+        if(!self)
         {
             m_root = node;
         }
@@ -170,17 +170,17 @@ int BinSearchTree::delete_node(int key)
     BiTree p = NULL;
     if(findNode(m_root, key, NULL, self))
     {
-        if(NULL == self)
+        if(!self)
         {
             return 0;
         }
-        if(NULL == self->rchild)
+        if(!self->rchild)
         {
             p = self;
             self = self->lchild;
             delete p;
         }
-        else if(NULL == self->lchild)
+        else if(!self->lchild)
         {
             p = self;
             self = self->rchild;
@@ -212,7 +212,7 @@ int BinSearchTree::delete_node(int key)
 int BinSearchTree::findMaxValue(int &data)
 {
     BiTree p = m_root;
-    if(NULL == p)
+    if(!p)
     {
         return -1;
     }
@@ -228,7 +228,7 @@ int BinSearchTree::findMaxValue(int &data)
 int BinSearchTree::findMinValue(int &data)
 {
     BiTree p = m_root;
-    if (NULL == p)
+    if (!p)
     {
         return -1;
     }
@@ -243,7 +243,7 @@ int BinSearchTree::findMinValue(int &data)
 
 int BinSearchTree::_get_deepth(BiTree node)
 {
-    if(NULL == node)
+    if(!node)
     {
         return 0;
     }
@@ -251,13 +251,14 @@ int BinSearchTree::_get_deepth(BiTree node)
     {
         int l = _get_deepth(node->lchild);
         int r = _get_deepth(node->rchild);
+
         return (l > r) ? (l+1) : (r+1);
     }
 }
 
 int BinSearchTree::get_max_deepth()
 {
-    if(NULL != m_root)
+    if(m_root)
     {
         int deep = 1;
         return _get_deepth(m_root);
@@ -270,10 +271,11 @@ int BinSearchTree::get_max_deepth()
 
 int BinSearchTree::_get_node_num(BiTree node)
 {
-    if(NULL != node)
+    if(node)
     {
         int l = _get_node_num(node->lchild);
         int r = _get_node_num(node->rchild);
+
         return l+r+1;
     }
     else
@@ -284,7 +286,7 @@ int BinSearchTree::_get_node_num(BiTree node)
 
 int BinSearchTree::get_node_num()
 {
-    if(NULL == m_root)
+    if(!m_root)
     {
         return 0;
     }
@@ -296,7 +298,7 @@ int BinSearchTree::get_node_num()
 
 int BinSearchTree::_level_traverse(BiTree node)
 {
-    if(NULL == node)
+    if(!node)
     {
         return 0;
     }
@@ -324,7 +326,7 @@ int BinSearchTree::_level_traverse(BiTree node)
 
 int BinSearchTree::levelTraverse()
 {
-    if(NULL == m_root)
+    if(!m_root)
     {
         return 0;
     }
